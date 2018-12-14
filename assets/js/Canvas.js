@@ -1,9 +1,9 @@
 class Canvas {
     
-    constructor(canvas, pointRadius) {
+    constructor(canvas, pointRadius, bezier) {
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
-        this.controlPoints = [];
+        this.controlPointsGroup = [[], [], [], []];
         this.pointRadius = pointRadius;
 
         this.addNewControlPoint = this.addNewControlPoint.bind(this);
@@ -19,7 +19,15 @@ class Canvas {
     addNewControlPoint(x, y) {
         let path = new Path2D();
         let controlPoint = new ControlPoint(path, x, y, this.pointRadius);
-        this.controlPoints.push(controlPoint);
+        let foundFreeGroup = false;
+
+        this.controlPointsGroup.forEach(group => {
+            if(group.length < 4 && !foundFreeGroup) {
+                group.push(controlPoint);
+                foundFreeGroup = true;
+            }
+        });
+
         this.draw();
     }
 
@@ -32,10 +40,10 @@ class Canvas {
     intersectControlPoint(click) {
         let controlPoint = null;
     
-        this.controlPoints.forEach(point => {
-            console.log(point);
-            
-            if(point.intersect(click.offsetX, click.offsetY)) controlPoint = point;        
+        this.controlPointsGroup.forEach(group => {
+            group.forEach((point) => {
+                if(point.intersect(click.offsetX, click.offsetY)) controlPoint = point;        
+            })
         });
     
         return controlPoint;
@@ -44,11 +52,13 @@ class Canvas {
     draw(){
         this.ctx.clearRect(0,0, this.canvas.width, this.canvas.height);
     
-        this.controlPoints.forEach(point => {
-            const path = new Path2D();
-            path.arc(point.x, point.y, point.radius, 0, 2 * Math.PI);
-            point.setPath(path);
-            this.ctx.fill(point.path);
+        this.controlPointsGroup.forEach(group => {
+            group.forEach((point) => {
+                const path = new Path2D();
+                path.arc(point.x, point.y, point.radius, 0, 2 * Math.PI);
+                point.setPath(path);
+                this.ctx.fill(point.path);
+            })
         });
     }
 }

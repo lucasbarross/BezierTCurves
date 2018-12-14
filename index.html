@@ -9,15 +9,30 @@
 </head>
 <body>
     <div id="container" class="flex column center">
-        <strong>Parâmetro de controle</strong>
         <div class="flex center">
-            <input type="range" id="interpolationParameter" value="1" min="1" max="500">
-            <div id="parameterValue">1</div>
+            <div class="flex column center">
+                <strong>Parâmetro de controle</strong>
+                <div class="flex center">
+                    <input type="range" id="interpolationParameter" value="1" min="1" max="500">
+                    <div id="parameterValue">1</div>
+                </div>
+            </div>
+            
+            <div class="flex column center">
+                <strong>T-Curvas</strong>
+                <input type="number" id="tCurves" value="1" min="1">
+            </div>
+            
+            <div class="flex column center">
+                <strong>Carreiras</strong>
+                <input type="number" name="carreiras" id="carreiras" value="1" min="1">
+            </div>
         </div>
         <button>Desenhar curvas</button>
         <canvas id="canvas"></canvas>
     </div>
     
+    <script src="assets/js/bezier/Bezier.js"></script>
     <script src="assets/js/bezier/ControlPoint.js"></script>
     <script src="assets/js/canvas.js"></script>
     <script src="assets/js/input.js"></script>
