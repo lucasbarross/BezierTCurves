@@ -16,6 +16,7 @@ class Input {
     changeInterpolationValue(e) {
         document.getElementById("parameterValue").innerHTML = e.target.value;
         this.bezier.setInterpolationControl(e.target.value);
+        this.canvasObj.draw();
     }
 
     changeVisibility(e){
@@ -25,10 +26,12 @@ class Input {
     
     changeCarreiras(e) {
         this.bezier.setCarreiras(e.target.value);
+        this.canvasObj.draw();
     }
     
     changeTCurvesValue(e) {
         this.bezier.setTCurves(e.target.value);
+        this.canvasObj.draw();
     }
 
     mouseDown(e) {
