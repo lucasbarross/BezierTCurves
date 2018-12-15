@@ -8,6 +8,13 @@ class Canvas {
         this.bezier = bezier;
         this.lineWidthBezier = lineWidthBezier;
         this.lineColorBezier = lineColorBezier;
+        
+        this.show = {
+            pontos: true,
+            segmentos: true,
+            curvas: true
+        }
+
 
         this.addNewControlPoint = this.addNewControlPoint.bind(this);
         this.intersectControlPoint = this.intersectControlPoint.bind(this);
@@ -56,9 +63,9 @@ class Canvas {
         this.ctx.clearRect(0,0, this.canvas.width, this.canvas.height);
         
         this.controlPointsGroup.forEach(group => {
-            this.drawLinesToControlPoints(group);
-            this.drawControlPoints(group);
-            this.drawBezierCurves(group);
+            if(this.show.segmentos) this.drawLinesToControlPoints(group);
+            if(this.show.pontos) this.drawControlPoints(group);
+            if(this.show.curvas) this.drawBezierCurves(group);
         });
     }
     

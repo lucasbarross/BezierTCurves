@@ -10,11 +10,17 @@ class Input {
         this.changeCarreiras = this.changeCarreiras.bind(this);
         this.changeTCurvesValue = this.changeTCurvesValue.bind(this);
         this.changeInterpolationValue = this.changeInterpolationValue.bind(this);
+        this.changeVisibility = this.changeVisibility.bind(this);
     }
 
     changeInterpolationValue(e) {
         document.getElementById("parameterValue").innerHTML = e.target.value;
         this.bezier.setInterpolationControl(e.target.value);
+    }
+
+    changeVisibility(e){
+        this.canvasObj.show[e.target.id] = e.target.checked;
+        this.canvasObj.draw();
     }
     
     changeCarreiras(e) {
@@ -57,6 +63,9 @@ class Input {
         document.getElementById("interpolationParameter").addEventListener("input", this.changeInterpolationValue);
         document.getElementById("carreiras").addEventListener("input", this.changeCarreiras);
         document.getElementById("tCurves").addEventListener("input", this.changeTCurvesValue);
+        document.getElementById("pontos").addEventListener("input", this.changeVisibility);
+        document.getElementById("segmentos").addEventListener("input", this.changeVisibility);
+        document.getElementById("curvas").addEventListener("input", this.changeVisibility);
     }
 
 }
