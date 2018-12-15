@@ -15,17 +15,24 @@ class Canvas {
             curvas: true
         }
 
-
         this.addNewControlPoint = this.addNewControlPoint.bind(this);
         this.intersectControlPoint = this.intersectControlPoint.bind(this);
         this.draw = this.draw.bind(this);
     }
-
+    /**
+     * Altera largura e altura do canvas
+     * @param {float} width nova largura do canvas
+     * @param {float} height nova altura do canvas
+     */
     resizeCanvas(width, height) {
         this.canvas.width = width;
         this.canvas.height = height;
     }
-
+    /**
+     * Adiciona um novo ponto de controle ao canvas
+     * @param {float} x posição X do ponto de controle
+     * @param {float} y posição Y do ponto de controle
+     */
     addNewControlPoint(x, y) {
         let path = new Path2D();
         let controlPoint = new ControlPoint(path, x, y, this.pointRadius);
@@ -40,13 +47,18 @@ class Canvas {
 
         this.draw();
     }
-
+    /**
+     * Função básica para melhor resolução do canvas
+     */
     resizeToFit() {
         var width = parseFloat(window.getComputedStyle(this.canvas).width);
         var height = parseFloat(window.getComputedStyle(this.canvas).height);
         this.resizeCanvas(width, height);
     }
-
+    /**
+     * Detecta se um clique do mouse intersectou em algum dos pontos de controle
+     * @param {MouseClickEvent} click evento de click gerado pelo listener do javascript 
+     */
     intersectControlPoint(click) {
         let controlPoint = null;
     
@@ -59,6 +71,9 @@ class Canvas {
         return controlPoint;
     }
 
+    /**
+     * Faz o desenho no canvas de todos os elementos que estão com a opção de serem mostrados
+     */
     draw(){
         this.ctx.clearRect(0,0, this.canvas.width, this.canvas.height);
         
@@ -69,6 +84,10 @@ class Canvas {
         });
     }
     
+    /**
+     * Desenha os segmentos de um ponto de controle a outro em um dado grupo de pontos de controle.
+     * @param {ControlPoints[]} group o grupo de pontos de controle que terá linhas renderizadas de um a outro.
+     */
     drawLinesToControlPoints(group){
         const path = new Path2D();
         
@@ -79,9 +98,12 @@ class Canvas {
     
         this.strokePath(3, "#c1ccd3", path);
     }
-
+    /**
+     * Desenha os pontos de controle
+     * @param {ControlPoints[]} group grupo de pontos de controle a serem renderizados. 
+     */
     drawControlPoints(group) {
-        group.forEach((point, i) => {
+        group.forEach((point) => {
             const path = new Path2D();
             path.arc(point.x, point.y, point.radius, 0, 2 * Math.PI);
             point.setPath(path);
@@ -89,12 +111,20 @@ class Canvas {
         });
     }
 
+
+    /**
+     * Desenha a curva de bezier associada a no máximo quatro pontos de controle
+     * @param {ControlPoints[]} group grupo de pontos de controle a terem a curva de bézier calculada e desenhada
+     */
     drawBezierCurves(group){
         const path = new Path2D();
         this.bezier.deCasteljausPoints(group, path);
         this.strokePath(this.lineWidthBezier, this.lineColorBezier, path);
     }
-
+    /**
+     * Remove um ponto de controle
+     * @param {ControlPoint} point ponto a ser removido
+     */
     removePoint(point){
         this.controlPointsGroup.forEach((group) => {
             let index = group.indexOf(point);
@@ -103,7 +133,12 @@ class Canvas {
 
         this.draw();
     }
-
+    /**
+     * Desenha linhas de determinado path    
+     * @param {Number} lineWidth largura da linha
+     * @param {String} strokeStyle estilo da linha (cor, hexadecimal)
+     * @param {Path2D} path path que possui a linha a ser renderizada
+     */
     strokePath(lineWidth, strokeStyle, path){
         this.ctx.lineWidth = lineWidth;
         this.ctx.strokeStyle = strokeStyle;

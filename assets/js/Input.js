@@ -13,30 +13,54 @@ class Input {
         this.changeVisibility = this.changeVisibility.bind(this);
     }
 
+    /**
+     * Função de evento quando o usuário mudar o valor de interpolação (parâmetro)
+     * @param {Event} e evento javascript input
+     */
     changeInterpolationValue(e) {
         document.getElementById("parameterValue").innerHTML = e.target.value;
         this.bezier.setInterpolationControl(e.target.value);
         this.canvasObj.draw();
     }
 
+    /**
+     * Função de evento quando o usuário mudar a visibilidade de algum elemento (curvas, segmentos...)
+     * @param {Event} e evento javascript input
+     */
     changeVisibility(e){
         this.canvasObj.show[e.target.id] = e.target.checked;
         this.canvasObj.draw();
     }
-    
+
+    /**
+     * Função de evento quando o usuário mudar o valor de carreiras das curvas
+     * @param {Event} e evento javascript input
+     */
     changeCarreiras(e) {
         this.bezier.setCarreiras(e.target.value);
         this.canvasObj.draw();
     }
     
+    /**
+     * Função de evento quando o usuário mudar o valor de parâmetro das T-Curvas
+     * @param {Event} e evento javascript input
+     */
     changeTCurvesValue(e) {
         this.bezier.setTCurves(e.target.value);
         this.canvasObj.draw();
     }
-
+    /**
+     * Função de evento quando o usuário clicar com o mouse.
+     * @param {Event} e evento javascript mousedown
+    */
     mouseDown(e) {
         this.clickedControlPoint = canvas.intersectControlPoint(e);
-        
+        /**
+         * é checado se foi com o botao direito e caso tenha sido,
+         * e o click nao intersecta nenhum ponto de controle, cria um novo ponto de controle.
+        * Caso o click tenha sido com o botão do meio do mouse e tenha sido em algum ponto de controle, esse ponto
+        * de controle é removido.
+         */
         if(e.which == 1) {
             if(!this.clickedControlPoint) {
                 this.canvasObj.addNewControlPoint(e.offsetX, e.offsetY);
@@ -45,7 +69,10 @@ class Input {
             this.canvasObj.removePoint(this.clickedControlPoint);
         }
     }
-
+    /**
+     * Função de evento quando o usuário mexe o mouse: move um ponto de controle que esteja sendo clicado.
+     * @param {Event} e evento javascript mousemove
+     */
     mouseMove(e) {
         const point = this.clickedControlPoint;
         if (point) {
@@ -55,10 +82,16 @@ class Input {
         }
     }
 
+    /**
+     * Função de evento quando o click do usuário solta
+     * @param {Event} e evento javascript mouseup
+     */
     mouseUp(e) {
         this.clickedControlPoint = null;
     }
-
+    /**
+     * Adiciona os event listeners do javascript com suas respectivas funções
+     */
     startEventListeners() {
         this.canvasObj.canvas.addEventListener('mousedown', this.mouseDown);
         this.canvasObj.canvas.addEventListener('mousemove', this.mouseMove);

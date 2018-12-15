@@ -27,7 +27,12 @@ class Bezier {
     setTCurves(value) {
         this.tCurves = value;
     };
-
+    /**
+     * Calcula o algoritmo de De Casteljaus para determinado grupo de pontos de controle e 
+     * aplica os pontos calculados em um contexto de canvas.
+     * @param {ControlPoints[]} group grupo de pontos de controle a terem uma curva de bézier calculada sobre
+     * @param {CanvasRenderingContext2D} canvas contexto do canvas para desenhar as linhas calculadas pelo algoritmo 
+     */
     deCasteljausPoints(group, canvas) {
         if(group.length <= 1) return;
         
