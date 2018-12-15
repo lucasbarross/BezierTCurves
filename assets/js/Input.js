@@ -27,16 +27,19 @@ class Input {
 
     mouseDown(e) {
         this.clickedControlPoint = canvas.intersectControlPoint(e);
-
-        if(!this.clickedControlPoint) {
-            this.canvasObj.addNewControlPoint(e.offsetX, e.offsetY);
+        
+        if(e.which == 1) {
+            if(!this.clickedControlPoint) {
+                this.canvasObj.addNewControlPoint(e.offsetX, e.offsetY);
+            }
+        } else if(e.which == 2 && this.clickedControlPoint) {
+            this.canvasObj.removePoint(this.clickedControlPoint);
         }
     }
 
     mouseMove(e) {
         const point = this.clickedControlPoint;
         if (point) {
-            point.path = new Path2D();
             point.x = e.offsetX;
             point.y = e.offsetY;
             this.canvasObj.draw();
