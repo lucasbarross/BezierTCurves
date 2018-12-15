@@ -113,7 +113,7 @@ class Canvas {
 
 
     /**
-     * Desenha a curva de bezier associada a no máximo quatro pontos de controle
+     * Desenha a curva de bezier associada a pontos de controle
      * @param {ControlPoints[]} group grupo de pontos de controle a terem a curva de bézier calculada e desenhada
      */
     drawBezierCurves(group){
