@@ -51,6 +51,10 @@ class Input {
         this.canvasObj.draw();
     }
 
+    /**
+     * Ativada quando o usuário clica em "desenhar curvas"
+     * @param {Event} e evento javascript input 
+     */
     generateTCurves(e) {
         this.canvasObj.show["tCurves"] = true;
         this.canvasObj.draw();
@@ -80,6 +84,9 @@ class Input {
         }
     }
 
+    /**
+     * Ativa o botão de desenhar curva e libera o slide de ajuste de parametro 
+     */
     enableButtonAndSlide() {
         document.getElementById("desenharCurvas").removeAttribute("disabled");
         document.getElementById("interpolationParameter").removeAttribute("disabled");

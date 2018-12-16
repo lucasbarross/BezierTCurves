@@ -155,10 +155,12 @@ class Canvas {
         //checa se tem 16 pontos postos no canvas
         if(this.controlPointsGroup.reduce((p, c) => { return p + c.length }, 0) < 16) return;
 
-        const path = new Path2D();
         const groups = this.controlPointsGroup;
-
+        const colors = ["#f23640", "#0000ff"];
+        
+        let colorIndex = 0;  
         for(let t = 0; t <= 1; t += 1/this.bezier.interpolationControl) { 
+            const path = new Path2D();
             
             const group = [];
 
@@ -174,9 +176,11 @@ class Canvas {
 
             //Desenha as curvas na vertical, a partir dos pontos de controle calculados para o "t" atual.
             this.drawDeCasteljaus(group, path, this.bezier.tCurves);
-        }
 
-        this.strokePath(2, this.lineColorBezier, path);
+            this.strokePath(2, colors[colorIndex], path);
+            colorIndex = (colorIndex+1) % colors.length;
+        }   
+
     }
     
     /**
