@@ -13,14 +13,14 @@
             <!-- <div class="flex column center" style="margin-right: 10px;"> -->
             <div class="flex center">
                 <strong>Parâmetro de controle</strong>
-                <input type="range" id="interpolationParameter" value="1" min="1" max="500">
-                <div id="parameterValue">1</div>
+                <input disabled type="range" id="interpolationParameter" value="250" min="1" max="1000">
+                <div id="parameterValue">250</div>
                 <!-- </div> -->
             </div>
             <div class="flex center">
                 <div class="flex column center" style="margin-right: 10px;">
                     <strong>T-Curvas</strong>
-                    <input type="number" id="tCurves" value="1" min="1">
+                    <input type="number" id="tCurvesValue" value="50" min="1">
                 </div>
 
                 <div class="flex column center">
@@ -29,12 +29,13 @@
                 </div>
             <!-- </div> -->
             </div>
-        <button style="margin-top: 10px;">Desenhar curvas</button>
+        <button id="desenharCurvas" style="margin-top: 10px;" disabled>Desenhar curvas</button>
         <div class="flex center column">
             <div style="margin-top:10px; margin-bottom: 10px;" class="flex center">
                 <input id="pontos" type="checkbox" checked> Pontos
                 <input id="segmentos" type="checkbox" checked> Segmentos
                 <input id="curvas" type="checkbox" checked> Curvas
+                <input id="tCurves" type="checkbox" checked> T-Curvas
             </div>
         </div>
         <canvas id="canvas"></canvas>
@@ -42,8 +43,8 @@
     
     <script src="assets/js/bezier/Bezier.js"></script>
     <script src="assets/js/bezier/ControlPoint.js"></script>
-    <script src="assets/js/canvas.js"></script>
-    <script src="assets/js/input.js"></script>
+    <script src="assets/js/interaction/canvas.js"></script>
+    <script src="assets/js/interaction/input.js"></script>
     <script src="assets/js/main.js"></script>
 </body> 
 </html>

@@ -50,3 +50,7 @@ canvas {
 .flex.wrap{
     flex-wrap: wrap;
 }
+
+button:disabled{
+    visibility: hidden;
+}

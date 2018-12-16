@@ -11,6 +11,7 @@ class Input {
         this.changeTCurvesValue = this.changeTCurvesValue.bind(this);
         this.changeInterpolationValue = this.changeInterpolationValue.bind(this);
         this.changeVisibility = this.changeVisibility.bind(this);
+        this.generateTCurves = this.generateTCurves.bind(this);
     }
 
     /**
@@ -49,6 +50,11 @@ class Input {
         this.bezier.setTCurves(e.target.value);
         this.canvasObj.draw();
     }
+
+    generateTCurves(e) {
+        this.canvasObj.show["tCurves"] = true;
+        this.canvasObj.draw();
+    }
     /**
      * Função de evento quando o usuário clicar com o mouse.
      * @param {Event} e evento javascript mousedown
@@ -58,16 +64,25 @@ class Input {
         /**
          * é checado se foi com o botao direito e caso tenha sido,
          * e o click nao intersecta nenhum ponto de controle, cria um novo ponto de controle.
-        * Caso o click tenha sido com o botão do meio do mouse e tenha sido em algum ponto de controle, esse ponto
-        * de controle é removido.
+         * Caso o click tenha sido com o botão do meio do mouse e tenha sido em algum ponto de controle, esse ponto
+         * de controle é removido.
          */
         if(e.which == 1) {
             if(!this.clickedControlPoint) {
                 this.canvasObj.addNewControlPoint(e.offsetX, e.offsetY);
+                if(this.canvasObj.controlPointsGroup.reduce((p, c) => { return p + c.length }, 0) == 16) this.enableButtonAndSlide();
             }
         } else if(e.which == 2 && this.clickedControlPoint) {
             this.canvasObj.removePoint(this.clickedControlPoint);
+            document.getElementById("desenharCurvas").setAttribute("disabled", true)
+            document.getElementById("interpolationParameter").setAttribute("disabled", true);
+            this.canvasObj.show["tCurves"] = false;
         }
+    }
+
+    enableButtonAndSlide() {
+        document.getElementById("desenharCurvas").removeAttribute("disabled");
+        document.getElementById("interpolationParameter").removeAttribute("disabled");
     }
     /**
      * Função de evento quando o usuário mexe o mouse: move um ponto de controle que esteja sendo clicado.
@@ -98,10 +113,12 @@ class Input {
         this.canvasObj.canvas.addEventListener('mouseup', this.mouseUp);
         document.getElementById("interpolationParameter").addEventListener("input", this.changeInterpolationValue);
         document.getElementById("carreiras").addEventListener("input", this.changeCarreiras);
-        document.getElementById("tCurves").addEventListener("input", this.changeTCurvesValue);
+        document.getElementById("tCurvesValue").addEventListener("input", this.changeTCurvesValue);
         document.getElementById("pontos").addEventListener("input", this.changeVisibility);
         document.getElementById("segmentos").addEventListener("input", this.changeVisibility);
         document.getElementById("curvas").addEventListener("input", this.changeVisibility);
+        document.getElementById("tCurves").addEventListener("input", this.changeVisibility);
+        document.getElementById("desenharCurvas").addEventListener("click", this.generateTCurves);
     }
 
 }

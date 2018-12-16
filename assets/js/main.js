@@ -2,7 +2,7 @@
  * Pega os valores padrões dos atributos no HTML
  */
 const interpolationParameter = document.getElementById("interpolationParameter").value;
-const tCurves = document.getElementById("tCurves").value;
+const tCurves = document.getElementById("tCurvesValue").value;
 const carreiras = document.getElementById("carreiras").value;
 /////////////////
 
