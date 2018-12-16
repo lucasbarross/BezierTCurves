@@ -52,5 +52,5 @@ canvas {
 }
 
 button:disabled{
-    visibility: hidden;
+    background-color: #c9c9c92f;
 }
