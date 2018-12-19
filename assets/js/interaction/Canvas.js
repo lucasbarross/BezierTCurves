@@ -97,8 +97,9 @@ class Canvas {
     drawLinesToControlPoints(group){
         const path = new Path2D();
         
+        path.moveTo(group[0].x, group[0].y);
+        
         for(let i = 0; i < group.length-1; i++){
-            path.moveTo(group[i].x, group[i].y);
             path.lineTo(group[i+1].x, group[i+1].y);
         }
         
@@ -137,7 +138,9 @@ class Canvas {
         if(group.length <= 1) return;
         
         let point;
-        
+
+        canvas.moveTo(group[0].x, group[0].y);
+
         for(let t = 0; t <= 1; t += 1/stepSize){
             
             point = this.bezier.deCasteljaus(group, t);
@@ -172,7 +175,6 @@ class Canvas {
                 group.push(point);
             }
             
-            path.moveTo(group[0].x, group[0].y);
 
             //Desenha as curvas na vertical, a partir dos pontos de controle calculados para o "t" atual.
             this.drawDeCasteljaus(group, path, this.bezier.tCurves);
